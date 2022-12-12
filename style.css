@@ -1,0 +1,13 @@
+/* #mainDiv{
+    height:100vh;
+    display: flex;
+} */
+body{
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.card{
+    width: 500px;
+    height: 500px;
+}
