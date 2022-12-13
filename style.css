@@ -1,0 +1,39 @@
+/* #mainDiv{
+    height:100vh;
+    display: flex;
+} */
+
+h1{
+    text-align: center;
+}
+*{
+    box-sizing: border-box;
+}
+
+#mainDiv{
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.img{
+    height: 200px;
+    width: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.card{
+    width: 550px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    margin-bottom: 200px;
+}
+
+header{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
