@@ -3,14 +3,13 @@ import menu from "./data/data.js";
 let myMainDiv = document.getElementById("mainDiv");
 myMainDiv.classList.add("container");
 
+const patiekalai = ['All'];
 for (let i = 0; menu.length > i; i++) {
   let oneCardInfo = document.createElement("div");
   oneCardInfo.classList.add("card");
 
-//   //kategorijos
-//   let category = document.createElement("p");
-//   category.innerText = menu[i].category;
-//   oneCardInfo.appendChild(category);
+  if (!patiekalai.includes(menu[i].category))
+    patiekalai.push(menu[i].category);
 
   //img
   let cardImg = document.createElement("img");
@@ -40,9 +39,11 @@ for (let i = 0; menu.length > i; i++) {
   header.appendChild(cardPrice);
   oneCardInfo.appendChild(header);
 
-// //card info
-// let cardInfo = document.createElement('article').classList.add('div')
-// cardInfo.classList.add('div')
+  //kategorijos
+  let category = document.createElement('h5');
+  category.classList = "cardCategory"
+  category.innerText = menu[i].category;
+  oneCardInfo.appendChild(category)
 
 
   //description
@@ -54,9 +55,30 @@ for (let i = 0; menu.length > i; i++) {
 
   // keliam viska i main div
   myMainDiv.appendChild(oneCardInfo);
-  console.log(menu[i].title);
-
-  console.log(menu[i]);
-
-  
 }
+
+
+const filter_buttons = document.getElementById('filter');
+patiekalai.forEach(patiekalai => {
+    const menuButton = document.createElement('button');
+    menuButton.innerText = patiekalai;
+    menuButton.className = "menub";
+    filter_buttons.appendChild(menuButton);
+})
+
+const navbuttons = document.getElementsByClassName('menub');
+const card_title = document.getElementsByTagName('h5');
+
+
+for (let one_category of navbuttons) {
+  one_category.addEventListener('click', () => { getresult(one_category.innerText) })}
+  const getresult = (patiekalai) => {
+    for (let item of card_title) {
+      if (item.innerText == patiekalai || patiekalai === 'All') {
+        item.parentElement.style.display = "block";
+      }
+      else {
+        item.parentElement.style.display = "none"
+      }
+    }
+  }
