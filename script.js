@@ -20,11 +20,13 @@ for (let i = 0; menu.length > i; i++) {
 
   //Preke
   let cardName = document.createElement("p");
+  cardName.classList = "cardName"
   let title = menu[i].title;
   cardName.innerHTML = title;
 
   //price
   let cardPrice = document.createElement("p");
+  cardPrice.classList = "cardPrice"
   let price = menu[i].price;
   cardPrice.innerHTML = price;
 

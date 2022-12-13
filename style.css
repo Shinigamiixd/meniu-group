@@ -1,13 +1,12 @@
-/* #mainDiv{
-    height:100vh;
-    display: flex;
-} */
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+*{
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+}
 
 h1{
     text-align: center;
-}
-*{
-    box-sizing: border-box;
 }
 
 #mainDiv{
@@ -22,14 +21,31 @@ h1{
     width: 250px;
     object-fit: cover;
     border-radius: 10px;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .card{
-    width: 550px;
+    width: 260px;
     display: flex;
     flex-wrap: wrap;
-    padding: 10px;
-    margin-bottom: 200px;
+    margin: 10px;
+    border: none;
+}
+
+.cardName{
+    font-size: 20px;
+    text-transform: capitalize;
+    margin-left: 5px;
+}
+
+.cardPrice{
+    background-color: blue;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    margin-right: 5px;
 }
 
 header{
