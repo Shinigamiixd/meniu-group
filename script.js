@@ -14,9 +14,12 @@ for (let i = 0; menu.length > i; i++) {
 
   //img
   let cardImg = document.createElement("img");
+  let imgContainer = document.createElement("div")
+  imgContainer.classList = "img-container"
   cardImg.classList.add('img')
   cardImg.src = menu[i].img;
-  oneCardInfo.appendChild(cardImg);
+  imgContainer.appendChild(cardImg)
+  oneCardInfo.appendChild(imgContainer);
 
   //Preke
   let cardName = document.createElement("p");

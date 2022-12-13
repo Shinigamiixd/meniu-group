@@ -17,15 +17,26 @@
     justify-content: center;
 }
 
+.img-container{
+    max-height: 200px;
+    max-width: 250px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 
 .img{
     height: 200px;
     width: 250px;
     object-fit: cover;
-    border-radius: 10px;
-    margin: auto;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.img:hover{
+    transform: scale(1.15);
 }
 
 .card{
