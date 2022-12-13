@@ -44,7 +44,7 @@ for (let i = 0; menu.length > i; i++) {
 
   //description
   let cardDesc = document.createElement("p");
-  cardDesc.classList.add("p");
+  cardDesc.classList.add("cardDesc");
   let desc = menu[i].desc;
   cardDesc.innerHTML = desc;
   oneCardInfo.appendChild(cardDesc);
@@ -54,4 +54,6 @@ for (let i = 0; menu.length > i; i++) {
   console.log(menu[i].title);
 
   console.log(menu[i]);
+
+  
 }

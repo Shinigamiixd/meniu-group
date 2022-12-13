@@ -5,7 +5,8 @@
     font-family: 'Rubik', sans-serif;
 }
 
-h1{
+#current-menu{
+    margin-top: 20px;
     text-align: center;
 }
 
@@ -15,6 +16,7 @@ h1{
     flex-wrap: wrap;
     justify-content: center;
 }
+
 
 .img{
     height: 200px;
@@ -35,15 +37,21 @@ h1{
 }
 
 .cardName{
-    font-size: 20px;
+    font-size: 18px;
     text-transform: capitalize;
     margin-left: 5px;
+    font-weight: bold;
 }
 
 .cardPrice{
-    background-color: #ffe9b5;
+    background-color: #fdf7c4;
     padding: 5px;
     border-radius: 10px;
+    margin-right: 5px;
+}
+
+.cardDesc{
+    margin-left: 5px;
     margin-right: 5px;
 }
 
@@ -51,4 +59,9 @@ header{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
 }
