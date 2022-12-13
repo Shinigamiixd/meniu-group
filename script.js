@@ -66,7 +66,7 @@ for (let one_category of navbuttons) {
             const getresult = (patiekalai) => {
             
                 for (let item of card_title) {
-                    if (item.innerText === patiekalai || patiekalai === 'all') {
+                    if (item.innerText == patiekalai || patiekalai === 'All') {
                         item.parentElement.style.display = "block";
                         
                     }
