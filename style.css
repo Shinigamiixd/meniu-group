@@ -5,13 +5,22 @@
     font-family: 'Rubik', sans-serif;
 }
 
+body{
+    height: 160vh;
+}
+
+.bg-svg{
+    position: fixed;
+    bottom: 0;
+    user-select: none;
+}
+
 #current-menu{
     margin-top: 20px;
     text-align: center;
 }
 
 #mainDiv{
-    height: 100vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

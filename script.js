@@ -79,6 +79,6 @@ for (let one_category of navbuttons) {
       }
       else {
         item.parentElement.style.display = "none"
-      }
     }
   }
+}
