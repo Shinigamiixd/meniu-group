@@ -30,14 +30,14 @@ for (let i = 0; menu.length > i; i++) {
   let cardPrice = document.createElement("p");
   cardPrice.classList = "cardPrice"
   let price = menu[i].price;
-  cardPrice.innerHTML = price;
+  cardPrice.innerHTML = "$" + price;
 
-  //headeris title ir price
-  let header = document.createElement("header");
-  header.classList.add('itemInfo')
-  header.appendChild(cardName);
-  header.appendChild(cardPrice);
-  oneCardInfo.appendChild(header);
+  //title ir price
+  let title_price = document.createElement("div");
+  title_price.classList.add('title-price')
+  title_price.appendChild(cardName);
+  title_price.appendChild(cardPrice);
+  oneCardInfo.appendChild(title_price);
 
   //kategorijos
   let category = document.createElement('h5');

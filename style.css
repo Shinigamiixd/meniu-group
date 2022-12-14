@@ -16,6 +16,10 @@ body{
     z-index: -100;
 }
 
+.itemInfo{
+    height: 40px;
+}
+
 #current-menu{
     margin-top: 20px;
     text-align: center;
@@ -95,7 +99,7 @@ body{
     margin-right: 5px;
 }
 
-header{
+.title-price{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
