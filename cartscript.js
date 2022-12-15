@@ -1,8 +1,10 @@
 let currentcart = document.querySelector(".current-cart")
+let totalprice = 0
 
 let cart = JSON.parse(localStorage.getItem("cart"))
 console.log(cart)
 cart.forEach(element => {
+    totalprice += element.Price
     li = document.createElement("li")
     li.classList = "list-group-item d-flex justify-content-between lh-sm"
     
@@ -20,9 +22,25 @@ cart.forEach(element => {
     span.classList = "text-muted"
     span.innerHTML = "$" + element.Price
 
+    total = document.createElement("li")
+    total.classList = "list-group-item d-flex justify-content-between"
+    
+    totalspan = document.createElement("span")
+    totalspan.innerHTML = "Total (USD)"
+
+    totalstrong = document.createElement("strong")
+    totalstrong.innerHTML = "$" + totalprice.toFixed()
+
+    total.appendChild(totalspan)
+    total.appendChild(totalstrong)
+
     div.appendChild(h6)
     div.appendChild(small)
     li.appendChild(div)
     li.appendChild(span)
     currentcart.appendChild(li)
+
+    console.log(element.ID.length)
 });
+
+currentcart.appendChild(total)
