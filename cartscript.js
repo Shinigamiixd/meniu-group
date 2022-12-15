@@ -2,7 +2,6 @@ let currentcart = document.querySelector(".current-cart")
 let totalprice = 0
 
 let cart = JSON.parse(localStorage.getItem("cart"))
-console.log(cart)
 cart.forEach(element => {
     totalprice += element.Price
     li = document.createElement("li")
@@ -39,8 +38,6 @@ cart.forEach(element => {
     li.appendChild(div)
     li.appendChild(span)
     currentcart.appendChild(li)
-
-    console.log(element.ID.length)
 });
 
 currentcart.appendChild(total)
