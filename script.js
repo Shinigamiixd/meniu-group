@@ -3,6 +3,8 @@ import menu from "./data/data.js";
 let myMainDiv = document.getElementById("mainDiv");
 myMainDiv.classList.add("container");
 
+let totalItemsInCart = 0
+
 const patiekalai = ['All'];
 for (let i = 0; menu.length > i; i++) {
   let oneCardInfo = document.createElement("div");
@@ -52,6 +54,75 @@ for (let i = 0; menu.length > i; i++) {
   let desc = menu[i].desc;
   cardDesc.innerHTML = desc;
   oneCardInfo.appendChild(cardDesc);
+
+  //knopkes sudeti ir atiimti
+  let btnMinus = document.createElement('button');
+  btnMinus.classList = 'btn-minus btn-plus-minus'
+  oneCardInfo.appendChild(btnMinus);
+  btnMinus.innerHTML = '-';
+
+  let printinimas = document.createElement('p');
+  printinimas.classList.add('print');
+  printinimas.innerHTML = "0"
+  oneCardInfo.appendChild(printinimas);
+
+  let btnPlius = document.createElement('button');
+  btnPlius.classList = 'btn-plus btn-plus-minus'
+  oneCardInfo.appendChild(btnPlius);
+  btnPlius.innerHTML = '+';
+
+  btnPlius.addEventListener('click', pliusuojam);
+  btnMinus.addEventListener('click', minusuojam);
+
+  let btnDiv = document.createElement('div');
+  btnDiv.classList.add('btnDiv');
+  btnDiv.appendChild(btnMinus);
+  btnDiv.appendChild(printinimas);
+  btnDiv.appendChild(btnPlius);
+  oneCardInfo.appendChild(btnDiv)
+
+  //kintamieji funkcijom
+  let naujaKaina;
+  let kiekis = 0;
+
+  //mygtuku funkcijos
+  function minusuojam() {
+    if (kiekis <= 0) return
+    totalItemsInCart--
+    kiekis--
+    printinimas.innerHTML = kiekis
+    
+    let cart = JSON.parse(localStorage.getItem("cart"))
+    cart.some(element => {
+      let index = cart.indexOf(element)
+      console.log(index)
+      if (element.ID == menu[i].id){
+        cart.splice(index, 1)
+        localStorage.setItem('cart', JSON.stringify(cart))
+        return true
+      }
+    })
+  }
+
+  function pliusuojam() {
+    totalItemsInCart++
+    kiekis++
+    printinimas.innerHTML = kiekis
+    
+    const cart = (() => {
+      const fieldValue = localStorage.getItem("cart");
+      return fieldValue === null
+          ? []
+          : JSON.parse(fieldValue);
+    })();
+
+    cart.push({
+      "ID": menu[i].id,
+      "Title": menu[i].title,
+      "Price": menu[i].price
+    })
+    localStorage.setItem("cart", JSON.stringify(cart))
+  }
 
   // keliam viska i main div
   myMainDiv.appendChild(oneCardInfo);

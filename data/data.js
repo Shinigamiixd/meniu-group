@@ -77,7 +77,7 @@ const menu = [
       category: "Dinner",
       price: 22.99,
       img: "./data/images/item-10.jpeg",
-      desc: `A savory bison steak for dinner`,
+      desc: `A savory bison steak and asparagus for dinner`,
     },
   ];
 

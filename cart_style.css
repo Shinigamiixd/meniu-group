@@ -17,3 +17,7 @@
     user-select: none;
     z-index: -100;
 }
+
+h6{
+    text-transform: capitalize;
+}

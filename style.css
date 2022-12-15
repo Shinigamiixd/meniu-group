@@ -105,7 +105,26 @@ body{
     justify-content: space-between;
 }
 
-footer{
-    position: absolute;
-    bottom: 0;
+.btnDiv{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.btn-plus-minus{
+    width: 50px;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 5px;
+}
+
+.btn-plus{
+    margin-right: 5px;
+    background-color: #7fff00;
+}
+
+.btn-minus{
+    margin-left: 5px;
+    background-color: #ff0000;
 }
