@@ -21,3 +21,10 @@
 h6{
     text-transform: capitalize;
 }
+
+.clearCartButton{
+    width: 100%;
+    color: white;
+    background-color: #ff0000;
+    border: none;
+}

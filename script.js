@@ -3,10 +3,15 @@ import menu from "./data/data.js";
 let myMainDiv = document.getElementById("mainDiv");
 myMainDiv.classList.add("container");
 
-let totalItemsInCart = 0
-
 const patiekalai = ['All'];
 for (let i = 0; menu.length > i; i++) {
+  const cart = (() => {
+    const fieldValue = localStorage.getItem("cart");
+    return fieldValue === null
+      ? []
+      : JSON.parse(fieldValue);
+  })();
+
   let oneCardInfo = document.createElement("div");
   oneCardInfo.classList.add("card");
 
@@ -55,7 +60,7 @@ for (let i = 0; menu.length > i; i++) {
   cardDesc.innerHTML = desc;
   oneCardInfo.appendChild(cardDesc);
 
-  //knopkes sudeti ir atiimti
+  //knopkes sudeti, printinimas ir atiimti
   let btnMinus = document.createElement('button');
   btnMinus.classList = 'btn-minus btn-plus-minus'
   oneCardInfo.appendChild(btnMinus);
@@ -63,7 +68,12 @@ for (let i = 0; menu.length > i; i++) {
 
   let printinimas = document.createElement('p');
   printinimas.classList.add('print');
-  printinimas.innerHTML = "0"
+  const itemCount = cart.find(item => item.ID === menu[i].id)
+  if (itemCount) {
+    printinimas.innerHTML = itemCount.Count
+  } else {
+    printinimas.innerHTML = 0
+  }
   oneCardInfo.appendChild(printinimas);
 
   let btnPlius = document.createElement('button');
@@ -81,47 +91,61 @@ for (let i = 0; menu.length > i; i++) {
   btnDiv.appendChild(btnPlius);
   oneCardInfo.appendChild(btnDiv)
 
-  //kintamieji funkcijom
-  let naujaKaina;
-  let kiekis = 0;
-
   //mygtuku funkcijos
-  function minusuojam() {
-    if (kiekis <= 0) return
-    totalItemsInCart--
-    kiekis--
-    printinimas.innerHTML = kiekis
-    
-    let cart = JSON.parse(localStorage.getItem("cart"))
-    cart.some(element => {
-      let index = cart.indexOf(element)
-      console.log(index)
-      if (element.ID == menu[i].id){
-        cart.splice(index, 1)
-        localStorage.setItem('cart', JSON.stringify(cart))
-        return true
-      }
-    })
-  }
-
   function pliusuojam() {
-    totalItemsInCart++
-    kiekis++
-    printinimas.innerHTML = kiekis
-    
     const cart = (() => {
       const fieldValue = localStorage.getItem("cart");
       return fieldValue === null
-          ? []
-          : JSON.parse(fieldValue);
+        ? []
+        : JSON.parse(fieldValue);
     })();
 
-    cart.push({
-      "ID": menu[i].id,
-      "Title": menu[i].title,
-      "Price": menu[i].price
-    })
+    const existingItem = cart.find(item => item.ID === menu[i].id)
+    if (existingItem) {
+      existingItem.Count += 1
+    } else {
+      cart.push({
+        "ID": menu[i].id,
+        "Title": menu[i].title,
+        "Price": menu[i].price,
+        "Count": 1
+      })
+    }
+
     localStorage.setItem("cart", JSON.stringify(cart))
+
+    printinimas.innerHTML = cart.find(item => item.ID === menu[i].id).Count
+  }
+
+  function minusuojam() {
+    const cart = (() => {
+      const fieldValue = localStorage.getItem("cart");
+      return fieldValue === null
+        ? []
+        : JSON.parse(fieldValue);
+    })();
+
+
+    let kiekis = cart.find(item => item.ID === menu[i].id).Count
+    if (kiekis <= 0) return
+    printinimas.innerHTML = kiekis
+
+    const existingItem = cart.find(item => item.ID === menu[i].id)
+    if (existingItem) {
+      existingItem.Count -= 1
+      if (existingItem.Count === 0) {
+        const index = cart.indexOf(existingItem)
+        cart.splice(index, 1)
+      }
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart))
+
+    if (existingItem) {
+      printinimas.innerHTML = existingItem.Count
+    } else {
+      printinimas.innerHTML = 0
+    }
   }
 
   // keliam viska i main div
@@ -131,10 +155,10 @@ for (let i = 0; menu.length > i; i++) {
 
 const filter_buttons = document.getElementById('filter');
 patiekalai.forEach(patiekalai => {
-    const menuButton = document.createElement('button');
-    menuButton.innerText = patiekalai;
-    menuButton.className = "menub";
-    filter_buttons.appendChild(menuButton);
+  const menuButton = document.createElement('button');
+  menuButton.innerText = patiekalai;
+  menuButton.className = "menub";
+  filter_buttons.appendChild(menuButton);
 })
 
 const navbuttons = document.getElementsByClassName('menub');
@@ -142,14 +166,15 @@ const card_title = document.getElementsByTagName('h5');
 
 
 for (let one_category of navbuttons) {
-  one_category.addEventListener('click', () => { getresult(one_category.innerText) })}
-  const getresult = (patiekalai) => {
-    for (let item of card_title) {
-      if (item.innerText == patiekalai || patiekalai === 'All') {
-        item.parentElement.style.display = "block";
-      }
-      else {
-        item.parentElement.style.display = "none"
+  one_category.addEventListener('click', () => { getresult(one_category.innerText) })
+}
+const getresult = (patiekalai) => {
+  for (let item of card_title) {
+    if (item.innerText == patiekalai || patiekalai === 'All') {
+      item.parentElement.style.display = "block";
+    }
+    else {
+      item.parentElement.style.display = "none"
     }
   }
 }
