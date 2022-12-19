@@ -27,6 +27,39 @@ for (let i = 0; menu.length > i; i++) {
   imgContainer.appendChild(cardImg)
   oneCardInfo.appendChild(imgContainer);
 
+  //favorite button
+  let favoriteBtn = document.createElement("button")
+  favoriteBtn.classList = "favorite-btn"
+  const favorites = JSON.parse(localStorage.getItem("favorite")) || [];
+  const isInFav = favorites.findIndex(fav => fav.id === menu[i].id);
+  if (isInFav >= 0) {
+    favoriteBtn.classList = "favorite-btn bg-danger"
+  } else {
+    favoriteBtn.classList = "favorite-btn bg-light"
+  }
+  imgContainer.appendChild(favoriteBtn)
+
+  favoriteBtn.addEventListener('click', toggleFavorite);
+
+  function toggleFavorite() {
+    const favorites = JSON.parse(localStorage.getItem("favorite")) || [];
+
+    // check if the current item is already in the favorites list
+    const index = favorites.findIndex(fav => fav.id === menu[i].id);
+    if (index === -1) {
+      favorites.push({
+        "id": menu[i].id,
+        "title": menu[i].title
+      });
+      favoriteBtn.classList = "favorite-btn bg-danger"
+    } else {
+      favorites.splice(index, 1);
+      favoriteBtn.classList = "favorite-btn bg-light"
+    }
+
+    localStorage.setItem("favorite", JSON.stringify(favorites));
+  }
+
   //Preke
   let cardName = document.createElement("p");
   cardName.classList = "cardName"

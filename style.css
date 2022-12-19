@@ -28,7 +28,7 @@ body{
 #mainDiv{
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: center
 }
 
 #filter{
@@ -65,6 +65,38 @@ body{
 
 .img:hover{
     transform: scale(1.15);
+}
+
+/* .favorite-btn{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border-image: radial-gradient(red 69%,#0000 70%) 84.5% fill/100%;
+    clip-path: polygon(-41% 0,50% 91%, 141% 0)
+} */
+
+.favorite-btn{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 30px;
+    height: 30px;
+    clip-path: polygon(
+      50% 0%,
+      61% 35%,
+      98% 35%,
+      68% 57%,
+      79% 91%,
+      50% 70%,
+      21% 91%,
+      32% 57%,
+      2% 35%,
+      39% 35%
+    );
+    border: none;
 }
 
 .card{
