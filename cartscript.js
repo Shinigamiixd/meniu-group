@@ -5,6 +5,7 @@ else {
     let totalprice = 0
     cart.forEach(element => {
         totalprice += element.Price * element.Count
+        itemPrice = element.Price * element.Count
         li = document.createElement("li")
         li.classList = "list-group-item d-flex justify-content-between lh-sm"
 
@@ -20,7 +21,7 @@ else {
 
         span = document.createElement("span")
         span.classList = "text-muted"
-        span.innerHTML = "$" + element.Price * element.Count
+        span.innerHTML = "$" + itemPrice.toFixed(2)
 
         total = document.createElement("li")
         total.classList = "list-group-item d-flex justify-content-between"
@@ -29,7 +30,7 @@ else {
         totalspan.innerHTML = "Total (USD)"
 
         totalstrong = document.createElement("strong")
-        totalstrong.innerHTML = "$" + totalprice
+        totalstrong.innerHTML = "$" + totalprice.toFixed(2)
 
         total.appendChild(totalspan)
         total.appendChild(totalstrong)
