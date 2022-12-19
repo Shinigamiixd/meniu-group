@@ -3,15 +3,10 @@ import menu from "./data/data.js";
 let myMainDiv = document.getElementById("mainDiv");
 myMainDiv.classList.add("container");
 
+let totalItemsInCart = 0
+
 const patiekalai = ['All'];
 for (let i = 0; menu.length > i; i++) {
-  const cart = (() => {
-    const fieldValue = localStorage.getItem("cart");
-    return fieldValue === null
-      ? []
-      : JSON.parse(fieldValue);
-  })();
-
   let oneCardInfo = document.createElement("div");
   oneCardInfo.classList.add("card");
 
@@ -32,6 +27,14 @@ for (let i = 0; menu.length > i; i++) {
   cardName.classList = "cardName"
   let title = menu[i].title;
   cardName.innerHTML = title;
+
+  //favorite
+  let fav = document.createElement('button')
+  fav.setAttribute('id', 'fav_button')
+  let fov_icon = document.createElement('i')
+  fov_icon.classList.add('bi', 'bi-bookmark-heart')
+  fav.appendChild(fov_icon)
+  cardName.appendChild(fav)
 
   //price
   let cardPrice = document.createElement("p");
@@ -60,7 +63,7 @@ for (let i = 0; menu.length > i; i++) {
   cardDesc.innerHTML = desc;
   oneCardInfo.appendChild(cardDesc);
 
-  //knopkes sudeti, printinimas ir atiimti
+  //knopkes sudeti ir atiimti
   let btnMinus = document.createElement('button');
   btnMinus.classList = 'btn-minus btn-plus-minus'
   oneCardInfo.appendChild(btnMinus);
@@ -68,12 +71,7 @@ for (let i = 0; menu.length > i; i++) {
 
   let printinimas = document.createElement('p');
   printinimas.classList.add('print');
-  const itemCount = cart.find(item => item.ID === menu[i].id)
-  if (itemCount) {
-    printinimas.innerHTML = itemCount.Count
-  } else {
-    printinimas.innerHTML = 0
-  }
+  printinimas.innerHTML = "0"
   oneCardInfo.appendChild(printinimas);
 
   let btnPlius = document.createElement('button');
@@ -91,62 +89,91 @@ for (let i = 0; menu.length > i; i++) {
   btnDiv.appendChild(btnPlius);
   oneCardInfo.appendChild(btnDiv)
 
+  //kintamieji funkcijom
+  let naujaKaina;
+  let kiekis = 0;
+
   //mygtuku funkcijos
-  function pliusuojam() {
-    const cart = (() => {
-      const fieldValue = localStorage.getItem("cart");
-      return fieldValue === null
-        ? []
-        : JSON.parse(fieldValue);
-    })();
-
-    const existingItem = cart.find(item => item.ID === menu[i].id)
-    if (existingItem) {
-      existingItem.Count += 1
-    } else {
-      cart.push({
-        "ID": menu[i].id,
-        "Title": menu[i].title,
-        "Price": menu[i].price,
-        "Count": 1
-      })
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart))
-
-    printinimas.innerHTML = cart.find(item => item.ID === menu[i].id).Count
-  }
-
   function minusuojam() {
+    if (kiekis <= 0) return
+    totalItemsInCart--
+    kiekis--
+    printinimas.innerHTML = kiekis
+    
+    let cart = JSON.parse(localStorage.getItem("cart"))
+    cart.some(element => {
+      let index = cart.indexOf(element)
+      console.log(index)
+      if (element.ID == menu[i].id){
+        cart.splice(index, 1)
+        localStorage.setItem('cart', JSON.stringify(cart))
+        return true
+      }
+    })
+  }
+
+  function pliusuojam() {
+    totalItemsInCart++
+    kiekis++
+    printinimas.innerHTML = kiekis
+    
     const cart = (() => {
       const fieldValue = localStorage.getItem("cart");
       return fieldValue === null
-        ? []
-        : JSON.parse(fieldValue);
+          ? []
+          : JSON.parse(fieldValue);
     })();
 
-
-    let kiekis = cart.find(item => item.ID === menu[i].id).Count
-    if (kiekis <= 0) return
-    printinimas.innerHTML = kiekis
-
-    const existingItem = cart.find(item => item.ID === menu[i].id)
-    if (existingItem) {
-      existingItem.Count -= 1
-      if (existingItem.Count === 0) {
-        const index = cart.indexOf(existingItem)
-        cart.splice(index, 1)
-      }
-    }
-
+    cart.push({
+      "ID": menu[i].id,
+      "Title": menu[i].title,
+      "Price": menu[i].price
+    })
     localStorage.setItem("cart", JSON.stringify(cart))
-
-    if (existingItem) {
-      printinimas.innerHTML = existingItem.Count
-    } else {
-      printinimas.innerHTML = 0
-    }
   }
+
+
+  //fav button
+  fav.addEventListener('click', favorite)
+  function favorite() {
+    const favorites = (() => {
+      const fieldValue = localStorage.getItem("favorite");
+      return fieldValue === null
+          ? []
+          : JSON.parse(fieldValue);
+    })();
+
+    const inside_fav = localStorage.getItem('favorite')
+
+      if (localStorage.getItem('favorite') == null) {
+        favorites.push({
+          "id": menu[i].id,
+          "title": menu[i].title,
+        })
+        localStorage.setItem("favorite", JSON.stringify(favorites))
+      }else{
+        if (inside_fav.includes(menu[i].id)) {
+          favorites.some(element => {
+            let index = favorites.indexOf(element)
+            console.log(index)
+            if (element.ID == menu[i].id){
+              favorites.splice(index, 1)
+              localStorage.setItem('favorite', JSON.stringify(favorites))
+              return true
+            }
+          })
+        } else {
+          favorites.push({
+            "id": menu[i].id,
+            "Title": menu[i].title,
+          })
+          localStorage.setItem("favorite", JSON.stringify(favorites))
+        }
+      }
+  }
+
+  
+
 
   // keliam viska i main div
   myMainDiv.appendChild(oneCardInfo);
@@ -155,10 +182,10 @@ for (let i = 0; menu.length > i; i++) {
 
 const filter_buttons = document.getElementById('filter');
 patiekalai.forEach(patiekalai => {
-  const menuButton = document.createElement('button');
-  menuButton.innerText = patiekalai;
-  menuButton.className = "menub";
-  filter_buttons.appendChild(menuButton);
+    const menuButton = document.createElement('button');
+    menuButton.innerText = patiekalai;
+    menuButton.className = "menub";
+    filter_buttons.appendChild(menuButton);
 })
 
 const navbuttons = document.getElementsByClassName('menub');
@@ -166,15 +193,14 @@ const card_title = document.getElementsByTagName('h5');
 
 
 for (let one_category of navbuttons) {
-  one_category.addEventListener('click', () => { getresult(one_category.innerText) })
-}
-const getresult = (patiekalai) => {
-  for (let item of card_title) {
-    if (item.innerText == patiekalai || patiekalai === 'All') {
-      item.parentElement.style.display = "block";
-    }
-    else {
-      item.parentElement.style.display = "none"
+  one_category.addEventListener('click', () => { getresult(one_category.innerText) })}
+  const getresult = (patiekalai) => {
+    for (let item of card_title) {
+      if (item.innerText == patiekalai || patiekalai === 'All') {
+        item.parentElement.style.display = "block";
+      }
+      else {
+        item.parentElement.style.display = "none"
     }
   }
 }
